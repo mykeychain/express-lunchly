@@ -125,8 +125,7 @@ class Customer {
       ON customers.id = reservations.customer_id
       GROUP BY customers.id
       ORDER BY COUNT(*) DESC
-      LIMIT 10;
-                `
+      LIMIT 10;`
     );
 
     return results.rows.map((c) => new Customer(c));

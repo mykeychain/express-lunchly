@@ -3,6 +3,7 @@
 /** Routes for Lunchly */
 
 const express = require("express");
+const { BadRequestError } = require("./expressError");
 
 const Customer = require("./models/customer");
 const Reservation = require("./models/reservation");
@@ -90,9 +91,14 @@ router.post("/:id/add-reservation/", async function (req, res, next) {
     numGuests,
     notes,
   });
-  await reservation.save();
 
-  return res.redirect(`/${customerId}/`);
+  try {
+    await reservation.save();
+    return res.redirect(`/${customerId}/`);
+  } catch(error) {
+    throw new BadRequestError();
+  }
+
 });
 
 module.exports = router;

@@ -2,21 +2,21 @@
 
 /** Express app for Lunchly. */
 
-const Express = require("express");
+const express = require("express");
 const nunjucks = require("nunjucks");
-const bodyParser = require("body-parser");
 const routes = require("./routes");
 const { NotFoundError } = require("./expressError");
 
-const app = new Express();
+const app = express();
 
 // Parse body for urlencoded (non-JSON) data
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: false }));
 
 nunjucks.configure("templates", {
   autoescape: true,
   express: app,
 });
+
 
 app.use(routes);
 
