@@ -16,6 +16,11 @@ router.get("/", async function (req, res, next) {
   return res.render("customer_list.html", { customers });
 });
 
+router.get("/best-customers/", async function (req, res, next) {
+  const customers = await Customer.getBest();
+  return res.render("best-customers.html", { customers });
+});
+
 /** Form to add a new customer. */
 
 router.get("/add/", async function (req, res, next) {
@@ -39,7 +44,6 @@ router.get("/search/", async function (req, res, next) {
   const customers = await Customer.getBySearch(searchTerm);
   return res.render("customer_list.html", { customers });
 });
-
 
 /** Show a customer, given their ID. */
 

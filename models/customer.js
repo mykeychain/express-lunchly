@@ -94,9 +94,8 @@ class Customer {
     return `${prefix} ${this.firstName} ${middleName} ${this.lastName}`;
   }
 
-
   /** returns list of customers based on search term */
-  
+
   static async getBySearch(searchTerm) {
     let results = await db.query(
       `SELECT id,
@@ -108,8 +107,28 @@ class Customer {
         WHERE first_name ILIKE $1
           OR last_name ILIKE $1`,
       [`%${searchTerm}%`]
-      );
-      
+    );
+
+    return results.rows.map((c) => new Customer(c));
+  }
+
+  static async getBest() {
+    let results = await db.query(
+      `SELECT customers.id,
+              first_name AS "firstName",
+              last_name AS "lastName",
+              phone,
+              customers.notes,
+              COUNT(*) AS "reservationCount"
+      FROM customers
+      JOIN reservations
+      ON customers.id = reservations.customer_id
+      GROUP BY customers.id
+      ORDER BY COUNT(*) DESC
+      LIMIT 10;
+                `
+    );
+
     return results.rows.map((c) => new Customer(c));
   }
 }
