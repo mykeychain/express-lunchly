@@ -82,4 +82,11 @@ router.post("/:id/add-reservation/", async function (req, res, next) {
   return res.redirect(`/${customerId}/`);
 });
 
+router.get("/search", function (req, res, next) {
+  const searchTerm = req.query.q;
+  const customers = Customer.getBySearch(searchTerm);
+  console.log(customers);
+  return res.render("customer_list.html", customers);
+});
+
 module.exports = router;
