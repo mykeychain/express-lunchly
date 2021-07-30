@@ -97,7 +97,7 @@ class Customer {
   fullName() {
     const prefix = this.prefix ? this.prefix : "";
     const middleName = this.middleName ? this.middleName : "";
-    return `${this.prefix} ${this.firstName} ${middleName} ${this.lastName}`;
+    return `${prefix} ${this.firstName} ${middleName} ${this.lastName}`;
   }
 }
 
