@@ -90,6 +90,15 @@ class Customer {
       );
     }
   }
+
+
+  /** returns full name of customer. */
+
+  fullName() {
+    const prefix = this.prefix ? this.prefix : "";
+    const middleName = this.middleName ? this.middleName : "";
+    return `${this.prefix} ${this.firstName} ${middleName} ${this.lastName}`;
+  }
 }
 
 module.exports = Customer;
