@@ -93,19 +93,24 @@ class Customer {
     const middleName = this.middleName ? this.middleName : "";
     return `${prefix} ${this.firstName} ${middleName} ${this.lastName}`;
   }
+
+
+  /** returns list of customers based on search term */
+  
   static async getBySearch(searchTerm) {
     let results = await db.query(
       `SELECT id,
-              first_name AS "firstName",
-              last_name AS "lastName",
-              phone,
-              notes
-      FROM customers
-      WHERE first_name LIKE '%$1%'
-      OR last_name LIKE '%$1%'`,
-      [searchTerm]
-    );
-    return results.map((c) => new Customer(c));
+                first_name AS "firstName",
+                last_name AS "lastName",
+                phone,
+                notes
+        FROM customers
+        WHERE first_name ILIKE $1
+          OR last_name ILIKE $1`,
+      [`%${searchTerm}%`]
+      );
+      
+    return results.rows.map((c) => new Customer(c));
   }
 }
 
