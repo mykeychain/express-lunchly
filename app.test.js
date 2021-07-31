@@ -7,7 +7,7 @@ const db = require("./db");
 
 describe("GET /", function () {
   let testCustomer1;
-  let testCustomer2'
+  let testCustomer2;
 
   beforeEach(function () {
     await db.query(`DELETE FROM reservations`);
@@ -55,6 +55,7 @@ describe("GET /", function () {
     console.log("after each");
   });
 
+  
   it("Gets a list of customers", async function () {
     const resp = await request(app).get("/");
     expect(resp.body).toEqual("random");
